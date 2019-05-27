@@ -146,7 +146,9 @@ But this depends case to case basis so we would require to understand the situat
 
 [3] - `Parallel Programming` - https://realpython.com/async-io-python/        
         
-[4] - `Async Programming` - https://www.youtube.com/watch?v=BI0asZuqFXM
+[4] - `Async Programming` 
+    - https://www.youtube.com/watch?v=BI0asZuqFXM
+    - https://hackernoon.com/asyncio-for-the-working-python-developer-5c468e6e2e8e
 
 [5] - `Concurrency and Parallelism` - https://stackoverflow.com/questions/4844637/what-is-the-difference-between-concurrency-parallelism-and-asynchronous-methods
 
