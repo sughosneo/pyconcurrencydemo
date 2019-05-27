@@ -148,7 +148,8 @@ But this depends case to case basis so we would require to understand the situat
         
 [4] - `Async Programming` - https://www.youtube.com/watch?v=BI0asZuqFXM
 
-[5] - `Concurrency & Parallelism` - https://stackoverflow.com/questions/4844637/what-is-the-difference-between-concurrency-parallelism-and-asynchronous-methods
+[5] - `Concurrency and Parallelism` - https://stackoverflow.com/questions/4844637/what-is-the-difference-between-concurrency-parallelism-and-asynchronous-methods
+
 Disclaimer :
 ------------
 
