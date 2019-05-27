@@ -93,9 +93,50 @@ but only one thread can hold the GIL at a time. One thread must wait for another
     This is another approach which people like to do bring in concurrency model in python programming.
     Async IO got introduced after python 3.4+ and we can use quite easily to bring in concurrency in your program. 
     
+    Now with below trace someone can say that though it's running concurrently but total time taken almost same like others.
+    Because these are I/O centric processes. So it wouldn't have much effect of concurrency or parallelism scenario.
     
+    ```python
+    
+    Starting process 1 ...
+    Starting process 2 ...
+    Extracting frames from video ....
+    Generating and save thumbnails ...
+    Extracting frames from video ....
+    Generating and save thumbnails ...
+    Done!
+             11828 function calls (11824 primitive calls) in 181.025 seconds
+    
+       Random listing order was used
+    
+       ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+            1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:416(parent)
+            1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1009(_handle_fromlist)
+            3    0.000    0.000    0.000    0.000 C:\Users\sugho\AppData\Local\Programs\Python\Python37-32\lib\abc.py:137(__instancecheck__)
+            2    0.000    0.000    0.000    0.000 C:\Users\sugho\AppData\Local\Programs\Python\Python37-32\lib\abc.py:141(__subclasscheck__)
+        12/10    0.000    0.000    0.011    0.001 C:\Users\sugho\AppData\Local\Programs\Python\Python37-32\lib\os.py:196(makedirs)
+            1    0.000    0.000    0.000    0.000 C:\Users\sugho\AppData\Local\Programs\Python\Python37-32\lib\os.py:673(__getitem__)
+            1    0.000    0.000    0.000    0.000 C:\Users\sugho\AppData\Local\Programs\Python\Python37-32\lib\os.py:737(check_str)
+            1    0.000    0.000    0.000    0.000 C:\Users\sugho\AppData\Local\Programs\Python\Python37-32\lib\os.py:743(encodekey)
+           12    0.000    0.000    0.000    0.000 C:\Users\sugho\AppData\Local\Programs\Python\Python37-32\lib\ntpath.py:122(splitdrive)
+           12    0.000    0.000    0.000    0.000 C:\Users\sugho\AppData\Local\Programs\Python\Python37-32\lib\ntpath.py:178(split)
+           12    0.000    0.000    0.000    0.000 C:\Users\sugho\AppData\Local\Programs\Python\Python37-32\lib\ntpath.py:34(_get_bothseps)
+           10    0.000    0.000    0.003    0.000 C:\Users\sugho\AppData\Local\Programs\Python\Python37-32\lib\genericpath.py:16(exists)
+            2    0.000    0.000    0.000    0.000 C:\Users\sugho\AppData\Local\Programs\Python\Python37-32\lib\_collections_abc.py:72(_check_methods)
+            2    0.000    0.000    0.000    0.000 C:\Users\sugho\AppData\Local\Programs\Python\Python37-32\lib\_collections_abc.py:148(__subclasshook__)
+            2    0.004    0.002  181.017   90.508 D:\projects\pyconcurrencydemo\helpers\ThumbnailMgr.py:6(generateThumbnails)
+            2  177.394   88.697  177.394   88.697 D:\projects\pyconcurrencydemo\helpers\ThumbnailMgr.py:35(__waitTime)
+            2    0.059    0.029    3.497    1.748 D:\projects\pyconcurrencydemo\helpers\ThumbnailMgr.py:41(__getVideoFrames)
+           10    0.000    0.000    0.001    0.000 D:\projects\pyconcurrencydemo\helpers\ThumbnailMgr.py:68(__convertImageToThumbs)
+       
+    ```
 
-Though remember concurrency and parallelism is quite a different but somewhat releated as well.
+    Also, if we want to run multiple async task we could run task based workflows like with celery. It's easier to run the workflows in async manner in cluster as backend job. 
+    This actually helps to run the application operation in asynchronous manner.  
+    
+Though remember concurrency and parallelism is quite a different but somewhat related as well. 
+If it's I/O expensive operation then generically it's better to not block the main thread. If it's a CPU extensive operation then it's better to have the program executed in parallel.  
+But this depends case to case basis so we would require to understand the situation in very detail before taking the right choice. 
 
 #### References :
 
@@ -107,6 +148,7 @@ Though remember concurrency and parallelism is quite a different but somewhat re
         
 [4] - `Async Programming` - https://www.youtube.com/watch?v=BI0asZuqFXM
 
+[5] - `Concurrency & Parallelism` - https://stackoverflow.com/questions/4844637/what-is-the-difference-between-concurrency-parallelism-and-asynchronous-methods
 Disclaimer :
 ------------
 

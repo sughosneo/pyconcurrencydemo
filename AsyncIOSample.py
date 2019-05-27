@@ -11,26 +11,30 @@ class AsyncIOSample:
     '''
     @timeStatsProfiler
     def process(self):
+
         asyncio.run(self.__createThumbnail())
 
     async def __createThumbnail(self):
 
-        firstTask = asyncio.create_task(self.__processOne())
+        try:
 
-        # If someone is using python any other version than 3.7 then following line would be used instead of above one.
-        # firstTask = asyncio.ensure_future(self.__processOne())
+            firstTask = asyncio.create_task(self.__processOne())
+            secondTask = asyncio.create_task(self.__processTwo())
 
-        secondTask = asyncio.create_task(self.__processTwo())
+            await asyncio.wait([firstTask,secondTask])
 
-        await firstTask
-        await secondTask
+            # both processes finished
+            print("Done!")
 
-        # both processes finished
-        print("Done!")
+        except Exception as error:
+            print(error)
+
 
     async def __processOne(self):
 
         print("Starting process 1 ...")
+
+        await asyncio.sleep(0)
 
         videoFilePath1 = Constant.VIDEO_1_FILE_PATH
         thumbnailMgr1 = ThumbnailMgr()
@@ -39,6 +43,8 @@ class AsyncIOSample:
     async def __processTwo(self):
 
         print("Starting process 2 ...")
+
+        await asyncio.sleep(0)
 
         videoFilePath2 = Constant.VIDEO_2_FILE_PATH
         thumbnailMgr2 = ThumbnailMgr()
