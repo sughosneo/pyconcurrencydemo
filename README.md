@@ -133,7 +133,34 @@ but only one thread can hold the GIL at a time. One thread must wait for another
 
     Also, if we want to run multiple async task we could run task based workflows like with celery. It's easier to run the workflows in async manner in cluster as backend job. 
     This actually helps to run the application operation in asynchronous manner.  
+
+
+5. ***`unsync`***
+
+    In more advanced way if a program consist of mix and match methods which are could be CPU bound or Network I/O bound or if it could be a synchronous methods
+    which need to be ran as async way using thread, it's a manual process to identify and configure that method or even run that method accordingly within the program. To simplify the story there is unsync library which exactly helps to organize the methods based on it's need. It actually identifies the method how it should be ran based on some user defined method decorators and then it automatically run that method accordingly. User doesn't need to write extra bit of code to configure or even run the specific methods as per need. Below example shows exactly the same behaviour.
     
+    ```python
+        
+        Starting process 1 ...
+        Starting process 2 ...
+        Starting my heavy computation ...
+        Extracting frames from video ....
+        Generating and save thumbnails ...
+        Extracting frames from video ....
+        Generating and save thumbnails ...
+        
+        ...
+        ...
+        
+    ```
+    Look at actual **process()** method which requires to call a CPU bound and a disk I/O bound methods. Using unsync library we have just decorates those methods and rest it runs as per how it supposed to be. We just need to little more declarative to let the library know which one could be the CPU intensive processing and it's required to be run as multiprocessing manner and which is one it's required to run as just like async coroutines.
+    
+    Below screenshots also shows how much resource consumption was happening during this executions.
+    
+    ![Resource Consumption](./images/unsync_performance_2.png)
+    
+   
 Though remember concurrency and parallelism is quite a different but somewhat related as well. 
 If it's I/O expensive operation then generically it's better to not block the main thread. If it's a CPU extensive operation then it's better to have the program executed in parallel.  
 But this depends case to case basis so we would require to understand the situation in very detail before taking the right choice. 
